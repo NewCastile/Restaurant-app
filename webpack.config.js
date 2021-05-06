@@ -31,9 +31,19 @@ module.exports = {
                 }  
             },
             {
-                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                test: /\.(png|svg|jpg|jpeg|)$/i,
                 type: 'asset/resource',
+                generator: {
+                    filename: 'images/[hash][ext][query]'
+                }
             },
+            {
+                test: /\.svg$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'icons/[hash][ext][query]'
+                }
+            }
         ]  
     } 
 };

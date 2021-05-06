@@ -2,7 +2,7 @@ import { createAbout } from "./about.js"
 import { createMenu } from "./menu.js"
 import { createStory } from "./story.js"
 import { createInfo } from "./info.js"
-import "./css/main.css"
+
 const navbar = document.querySelector('.tabs')
 const textBox = document.querySelector('.text-box')
 let tabs = Array.from(navbar.children).splice(0,4)
