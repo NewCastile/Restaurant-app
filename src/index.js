@@ -1,16 +1,14 @@
-import { createAbout } from "./about.js"
-import { createMenu } from "./menu.js"
-import { createStory } from "./story.js"
-import { createInfo } from "./info.js"
+import { holder } from "./handlers.js"
 
 const navbar = document.querySelector('.tabs')
 const textBox = document.querySelector('.text-box')
-let tabs = Array.from(navbar.children).splice(0,4)
-let aboutInfo = createAbout()
-let menuInfo = createMenu()
-let storyInfo = createStory()
-let storeInfo = createInfo()
-navbar.addEventListener('click', displayTabContent)
+let tabs = Array.from(navbar.children).splice(0, navbar.children.length-1)
+
+function selectHandler(tab) {
+    let index = tab.dataset.index
+    let selectedHandler = holder.filter(item => item.index == index)[0].handler
+    return selectedHandler
+}
 
 function displayTabContent(event) {
     event.preventDefault()
@@ -21,27 +19,16 @@ function displayTabContent(event) {
     })
     event.target.classList.add('active')
 
-    if(event.target.classList.contains('tab-1')) {
-        while(textBox.firstChild) {
-            textBox.firstChild.remove()
-        }
-        textBox.appendChild(aboutInfo)
-    } else if(event.target.classList.contains('tab-2')) {
-        while(textBox.firstChild) {
-            textBox.firstChild.remove()
-        }
-        textBox.appendChild(menuInfo)
-    } else if (event.target.classList.contains('tab-3')) {
-        while(textBox.firstChild) {
-            textBox.firstChild.remove()
-        }
-        textBox.appendChild(storyInfo)
-    } else if (event.target.classList.contains('tab-4')) {
-        while(textBox.firstChild) {
-            textBox.firstChild.remove()
-        }
-        textBox.appendChild(storeInfo)
+    while(textBox.firstChild) {
+        textBox.firstChild.remove()
     }
+    let handler = selectHandler(event.target)
+    let content = handler()
+    textBox.appendChild(content)
 }
 
-textBox.appendChild(aboutInfo)
+navbar.addEventListener('click', displayTabContent)
+window.addEventListener('load', ()=> {
+    let handler = holder[0].handler
+    textBox.appendChild(handler())
+})
